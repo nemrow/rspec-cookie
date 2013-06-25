@@ -22,40 +22,63 @@ describe Cookie do
   end
 
   describe "#type" do
-    it "returns the type of the cookie"
+    it "returns the type of the cookie" do
+      cookie.type.should eq "peanut butter"
+    end
   end
 
   describe "#bake!" do
-    it "requires an integer time argument"
+    it "requires an integer time argument" do
+      expect {cookie.bake!("dog")}.to raise_error(TypeError)
+    end
 
-    it "returns the cookie object"
+    it "returns the cookie object" do
+      cookie.bake!(2).should eq cookie
+    end  
 
     it "changes the status of the cookie when given enough time" do
+      cookie.status
       expect { cookie.bake!(10) }.to change(cookie, :status)
     end
   end
 
   describe "#status" do
-    it "returns the cookie's current status"
+    it "returns the cookie's current status" do
+      cookie.status.should eq :doughy
+    end  
 
     context "when unbaked" do
-      it "is `:doughy`" 
+      it "is `:doughy`"  do
+        cookie.status.should eq :doughy
+      end
     end
 
     context "when baked for less than 7 minutes" do
-      it "is `:doughy`"
+      let(:cookie) { Cookie.new("peanut butter").bake!(6) }
+      it "is `:doughy`" do
+        cookie.status.should eq :doughy
+      end  
     end  
 
     context "when baked for at least 7 but less than 10 minutes" do
-      it "is `:almost_ready`"
+      let(:cookie) { Cookie.new("peanut butter").bake!(8) }
+      it "is `:almost_ready`" do
+        cookie.status.should eq :almost_ready
+      end
     end
 
     context "when baked for at least 10 but less than 12 minutes" do
-      it "is `:ready`"
+      let(:cookie) { Cookie.new("peanut butter").bake!(11) }
+      it "is `:ready`" do
+        cookie.status.should eq :ready
+      end
     end
 
     context "when baked for at least 12 minutes" do
-      it "is `:burned`"
+      let(:cookie) { Cookie.new("peanut butter").bake!(13) }
+      it "is `:burned`" do
+        cookie.status.should eq :burned
+      end
     end
   end
 end
