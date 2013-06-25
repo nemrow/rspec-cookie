@@ -54,30 +54,26 @@ describe Cookie do
     end
 
     context "when baked for less than 7 minutes" do
-      let(:cookie) { Cookie.new("peanut butter").bake!(6) }
       it "is `:doughy`" do
-        cookie.status.should eq :doughy
+        cookie.bake!(6).status.should eq :doughy
       end  
     end  
 
     context "when baked for at least 7 but less than 10 minutes" do
-      let(:cookie) { Cookie.new("peanut butter").bake!(8) }
       it "is `:almost_ready`" do
-        cookie.status.should eq :almost_ready
+        cookie.bake!(8).status.should eq :almost_ready
       end
     end
 
     context "when baked for at least 10 but less than 12 minutes" do
-      let(:cookie) { Cookie.new("peanut butter").bake!(11) }
       it "is `:ready`" do
-        cookie.status.should eq :ready
+        cookie.bake!(11).status.should eq :ready
       end
     end
 
     context "when baked for at least 12 minutes" do
-      let(:cookie) { Cookie.new("peanut butter").bake!(13) }
       it "is `:burned`" do
-        cookie.status.should eq :burned
+        cookie.bake!(13).status.should eq :burned
       end
     end
   end
